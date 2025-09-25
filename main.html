@@ -2,54 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Color Board</title>
   <style>
     body {
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      margin: 0px;
-	  	
+      height: 100vh;
       background: #111;
     }
 
     .container {
       display: grid;
-      grid-template-columns: repeat(40, 20px); 
-      gap: 3px;
+      grid-template-columns: repeat(40, 20px); /* 40 cols * 20 rows = 800 */
+      grid-gap: 2px;
     }
 
     .square {
       width: 20px;
       height: 20px;
-      background: #1d1d1d;
-      transition: background 0.55s ease; 
+      background-color: rgb(29, 29, 29); /* default */
+      transition: background-color 1s ease; /* smooth color transition */
     }
   </style>
 </head>
 <body>
-  <div class="container" id="board"></div>
+  <div class="container"></div>
 
   <script>
-    const container = document.getElementById('board');
-    const SQUARES = 700;
+    const container = document.querySelector(".container");
+    const SQUARES = 800;
 
+    // random color generator
     function getRandomColor() {
-      const colors = ['#e74c3c','#8e44ad','#3498db','#e67e22','#2ecc71','#f39c12','#1abc9c'];
+      const colors = [
+        "rgb(231, 76, 60)",   // red
+        "rgb(46, 204, 113)",  // green
+        "rgb(52, 152, 219)",  // blue
+        "rgb(241, 196, 15)",  // yellow
+        "rgb(155, 89, 182)",  // purple
+        "rgb(230, 126, 34)",  // orange
+        "rgb(26, 188, 156)"   // teal
+      ];
       return colors[Math.floor(Math.random() * colors.length)];
     }
 
     for (let i = 0; i < SQUARES; i++) {
-      const square = document.createElement('div');
-      square.classList.add('square');
+      const square = document.createElement("div");
+      square.classList.add("square");
 
-      square.addEventListener('mouseover', () => {
-        square.style.background = getRandomColor();
+      // hover pe random color
+      square.addEventListener("mouseover", () => {
+        square.style.backgroundColor = getRandomColor();
       });
 
-      square.addEventListener('mouseleave', () => {
-        square.style.background = '#1d1d1d'; 
+      // mouseout pe 1s ke andar wapas default color
+      square.addEventListener("mouseout", () => {
+        setTimeout(() => {
+          square.style.backgroundColor = "rgb(29, 29, 29)";
+        }, 1000);
       });
 
       container.appendChild(square);
